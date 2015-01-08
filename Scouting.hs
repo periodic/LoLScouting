@@ -71,6 +71,8 @@ showMatchSummary summonerMap championMap (MatchSummary victory participants) =
 summarizeMatch :: [SummonerId] -> MatchDetail -> (MatchSummary, SummonerStats)
 summarizeMatch interestingSummoners match =
   -- TODO: Clean up these lenses.
+  -- * Add dates
+  -- * Add per-summoner-champion stats
   let
       -- set of interesting summonerIds
       interestingSummonerSet = S.fromList interestingSummoners
@@ -189,6 +191,7 @@ getInterestingMatches summoners teams = do
                                                 . p_summonerId
       in (>= 4) . S.size . S.intersection summonerSet $ playersInMatch
 
+-- TODO: Get ranked stats for each summoner.
 main = do
   summoners <- $initHFlags "Scouting"
   putStrLn $ "summoners: " ++ show summoners
