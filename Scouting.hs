@@ -68,6 +68,34 @@ showMatchSummary summonerMap championMap (MatchSummary victory participants) =
         Just champion -> Just (summonerName, champion ^. c_name)
         _             -> Nothing
 
+showSummonerStats :: Map SummonerId Summoner -> Map ChampionId Champion -> SummonerStats -> Text
+showSummonerStats summonerMap championMap (SS summonerStatMap) =
+  let summonerStatList = M.toList summonerStatMap
+  in T.intercalate "\n" . Maybe.mapMaybe (uncurry showIndividualStats) $ summonerStatList
+  where
+    showIndividualStats :: SummonerId -> ChampionStats -> Maybe Text
+    showIndividualStats summonerId championStats = do
+      summoner <- M.lookup summonerId summonerMap
+      let name = summoner ^. s_name
+      championStats <- showChampStats championStats
+      return $ T.concat [name, "\n", championStats]
+    showChampStats :: ChampionStats -> Maybe Text
+    showChampStats (CS championStatsMap) = Just .
+      T.intercalate "\n" . Maybe.mapMaybe (uncurry showIndividualChampionStat) . M.toList $ championStatsMap
+    showIndividualChampionStat :: ChampionId -> ChampionStat -> Maybe Text
+    showIndividualChampionStat championId championStat = do
+      champion <- M.lookup championId championMap
+      let name = champion ^. c_name
+          champWins = wins championStat
+          champLosses = losses championStat
+          champGames = champWins + champLosses
+          champWinPct = fromIntegral champWins / fromIntegral champGames * 100
+          champKDA = fromIntegral (kills championStat + assists championStat) /
+                     fromIntegral (deaths championStat)
+      return $ T.concat [name, " " T.pack $ show champGames, " ", 
+                         T.pack $ show champWinPct, "% ",
+                         T.pack $ show champKDA, "KDA"]
+
 summarizeMatch :: [SummonerId] -> MatchDetail -> (MatchSummary, SummonerStats)
 summarizeMatch interestingSummoners match =
   -- TODO: Clean up these lenses.
@@ -126,13 +154,13 @@ summarizeMatch interestingSummoners match =
       num200s = L.length . L.filter (== 200) $ teamIds
       interestingTeamId = if num100s > num200s then 100 else 200
 
-      teamParticipants = 
+      teamParticipants =
           sortWith (view p_participantId)
           . L.filter ((== interestingTeamId) . view p_teamId)
           $ match ^. md_participants
       teamParticipantIds = teamParticipants ^.. traverse . p_participantId
       teamParticipantIdSet = S.fromList teamParticipantIds
-      teamParticipantIdentities = 
+      teamParticipantIdentities =
           sortWith (view pi_participantId)
           . L.filter (flip S.member teamParticipantIdSet . view pi_participantId)
           $ match ^. md_participantIdentities
@@ -207,5 +235,7 @@ main = do
     logMsg . ("Matches: " ++) . show $ matches ^.. traverse . md_matchId
     let matchSummaries = L.map (summarizeMatch (M.keys summonerMap)) matches
     mapM_ (logMsg . T.unpack . showMatchSummary summonerMap championMap . fst) matchSummaries
+    logMsg . T.unpack . showSummonerStats summonerMap championMap .
+        mconcat . L.map snd $ matchSummaries
 
 
