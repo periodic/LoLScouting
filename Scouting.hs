@@ -3,6 +3,7 @@ module Main where
 
 import Control.Applicative
 import Control.Lens
+import Control.Monad
 import Data.List as L
 import Data.Map as M
 import Data.Maybe as Maybe
@@ -11,8 +12,10 @@ import Data.Set as S
 import Data.Text as T
 import HFlags
 import System.Environment (getArgs)
+import Haxl.Core
 
-import RiotApi
+import RiotApi.Types
+import RiotApi.Haxl
 
 -- "e0ae40cd-dcf2-4cfd-9530-6eb037e54648"
 defineFlag "key" ("" :: Text) "Your Riot API developer key"
@@ -92,7 +95,7 @@ showSummonerStats summonerMap championMap (SS summonerStatMap) =
           champWinPct = fromIntegral champWins / fromIntegral champGames * 100
           champKDA = fromIntegral (kills championStat + assists championStat) /
                      fromIntegral (deaths championStat)
-      return $ T.concat [name, " " T.pack $ show champGames, " ", 
+      return $ T.concat [name, " ", T.pack $ show champGames, " ",
                          T.pack $ show champWinPct, "% ",
                          T.pack $ show champKDA, "KDA"]
 
@@ -224,18 +227,21 @@ main = do
   summoners <- $initHFlags "Scouting"
   putStrLn $ "summoners: " ++ show summoners
   putStrLn $ "Api Key: " ++ T.unpack flags_key
-  runRiotApi flags_key $ do
+  riotState <- initGlobalState 1 flags_key
+  env <- initEnv (stateSet riotState stateEmpty) ()
+  (championMap, summonerMap, teams, matches) <- runHaxl env $ do
     championMap <- createChampionMap
     summonerMap <- createSummonerMap summoners
-    logMsg . ("Summoners: " ++) . show $ summonerMap ^.. traverse . s_name
     teamMap <- createTeamMap (M.keys summonerMap)
     let teams = getInterestingTeams (M.keys summonerMap) (M.elems teamMap)
-    logMsg . ("Teams: " ++) . show $ teams ^.. traverse . t_name
     matches <- getInterestingMatches (M.keys summonerMap) teams
-    logMsg . ("Matches: " ++) . show $ matches ^.. traverse . md_matchId
-    let matchSummaries = L.map (summarizeMatch (M.keys summonerMap)) matches
-    mapM_ (logMsg . T.unpack . showMatchSummary summonerMap championMap . fst) matchSummaries
-    logMsg . T.unpack . showSummonerStats summonerMap championMap .
-        mconcat . L.map snd $ matchSummaries
+    return (championMap, summonerMap, teams, matches)
+  putStrLn . ("Summoners: " ++) . show $ summonerMap ^.. traverse . s_name
+  putStrLn . ("Teams: " ++) . show $ teams ^.. traverse . t_name
+  putStrLn . ("Matches: " ++) . show $ matches ^.. traverse . md_matchId
+  let matchSummaries = L.map (summarizeMatch (M.keys summonerMap)) matches
+  mapM_ (putStrLn . T.unpack . showMatchSummary summonerMap championMap . fst) matchSummaries
+  putStrLn . T.unpack . showSummonerStats summonerMap championMap .
+      mconcat . L.map snd $ matchSummaries
 
 
