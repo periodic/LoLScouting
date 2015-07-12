@@ -120,68 +120,68 @@ $(deriveJSON defaultOptions{fieldLabelModifier = drop 3} ''Player)
 makeClassy ''Player
 
 data ParticipantStats = ParticipantStats
-  { _ps_assists :: Integer -- |Number of assists
-  , _ps_champLevel :: Integer -- |Champion level achieved
-  , _ps_combatPlayerScore :: Maybe Integer -- |If game was a dominion game, player's combat score, otherwise 0
-  , _ps_deaths :: Integer -- |Number of deaths
-  , _ps_doubleKills :: Integer -- |Number of double kills
+  { _ps_assists :: Int -- |Number of assists
+  , _ps_champLevel :: Int -- |Champion level achieved
+  , _ps_combatPlayerScore :: Maybe Int -- |If game was a dominion game, player's combat score, otherwise 0
+  , _ps_deaths :: Int -- |Number of deaths
+  , _ps_doubleKills :: Int -- |Number of double kills
   , _ps_firstBloodAssist :: Bool -- |Flag indicating if participant got an assist on first blood
   , _ps_firstBloodKill :: Bool -- |Flag indicating if participant got first blood
   , _ps_firstInhibitorAssist :: Bool -- |Flag indicating if participant got an assist on the first inhibitor
   , _ps_firstInhibitorKill :: Bool -- |Flag indicating if participant destroyed the first inhibitor
   , _ps_firstTowerAssist :: Bool -- |Flag indicating if participant got an assist on the first tower
   , _ps_firstTowerKill :: Bool -- |Flag indicating if participant destroyed the first tower
-  , _ps_goldEarned :: Integer -- |Gold earned
-  , _ps_goldSpent :: Integer -- |Gold spent
-  , _ps_inhibitorKills :: Integer -- |Number of inhibitor kills
-  , _ps_item0 :: Integer -- |First item ID
-  , _ps_item1 :: Integer -- |Second item ID
-  , _ps_item2 :: Integer -- |Third item ID
-  , _ps_item3 :: Integer -- |Fourth item ID
-  , _ps_item4 :: Integer -- |Fifth item ID
-  , _ps_item5 :: Integer -- |Sixth item ID
-  , _ps_item6 :: Integer -- |Seventh item ID
-  , _ps_killingSprees :: Integer -- |Number of killing sprees
-  , _ps_kills :: Integer -- |Number of kills
-  , _ps_largestCriticalStrike :: Integer -- |Largest critical strike
-  , _ps_largestKillingSpree :: Integer -- |Largest killing spree
-  , _ps_largestMultiKill :: Integer -- |Largest multi kill
-  , _ps_magicDamageDealt :: Integer -- |Magical damage dealt
-  , _ps_magicDamageDealtToChampions :: Integer -- |Magical damage dealt to champions
-  , _ps_magicDamageTaken :: Integer -- |Magic damage taken
-  , _ps_minionsKilled :: Integer -- |Minions killed
-  , _ps_neutralMinionsKilled :: Integer -- |Neutral minions killed
-  , _ps_neutralMinionsKilledEnemyJungle :: Integer -- |Neutral jungle minions killed in the enemy team's jungle
-  , _ps_neutralMinionsKilledTeamJungle :: Integer -- |Neutral jungle minions killed in your team's jungle
-  , _ps_nodeCapture :: Maybe Integer -- |If game was a dominion game, number of node captures
-  , _ps_nodeCaptureAssist :: Maybe Integer -- |If game was a dominion game, number of node capture assists
-  , _ps_nodeNeutralize :: Maybe Integer -- |If game was a dominion game, number of node neutralizations
-  , _ps_nodeNeutralizeAssist :: Maybe Integer -- |If game was a dominion game, number of node neutralization assists
-  , _ps_objectivePlayerScore :: Maybe Integer -- |If game was a dominion game, player's objectives score, otherwise 0
-  , _ps_pentaKills :: Integer -- |Number of penta kills
-  , _ps_physicalDamageDealt :: Integer -- |Physical damage dealt
-  , _ps_physicalDamageDealtToChampions :: Integer -- |Physical damage dealt to champions
-  , _ps_physicalDamageTaken :: Integer -- |Physical damage taken
-  , _ps_quadraKills :: Integer -- |Number of quadra kills
-  , _ps_sightWardsBoughtInGame :: Integer -- |Sight wards purchased
-  , _ps_teamObjective :: Maybe Integer -- |If game was a dominion game, number of completed team objectives (i.e., quests)
-  , _ps_totalDamageDealt :: Integer -- |Total damage dealt
-  , _ps_totalDamageDealtToChampions :: Integer -- |Total damage dealt to champions
-  , _ps_totalDamageTaken :: Integer -- |Total damage taken
-  , _ps_totalHeal :: Integer -- |Total heal amount
-  , _ps_totalPlayerScore :: Maybe Integer -- |If game was a dominion game, player's total score, otherwise 0
-  , _ps_totalScoreRank :: Maybe Integer -- |If game was a dominion game, team rank of the player's total score (e.g., 1-5)
-  , _ps_totalTimeCrowdControlDealt :: Integer -- |Total dealt crowd control time
-  , _ps_totalUnitsHealed :: Integer -- |Total units healed
-  , _ps_towerKills :: Integer -- |Number of tower kills
-  , _ps_tripleKills :: Integer -- |Number of triple kills
-  , _ps_trueDamageDealt :: Integer -- |True damage dealt
-  , _ps_trueDamageDealtToChampions :: Integer -- |True damage dealt to champions
-  , _ps_trueDamageTaken :: Integer -- |True damage taken
-  , _ps_unrealKills :: Integer -- |Number of unreal kills
-  , _ps_visionWardsBoughtInGame :: Integer -- |Vision wards purchased
-  , _ps_wardsKilled :: Integer -- |Number of wards killed
-  , _ps_wardsPlaced :: Integer -- |Number of wards placed
+  , _ps_goldEarned :: Int -- |Gold earned
+  , _ps_goldSpent :: Int -- |Gold spent
+  , _ps_inhibitorKills :: Int -- |Number of inhibitor kills
+  , _ps_item0 :: Int -- |First item ID
+  , _ps_item1 :: Int -- |Second item ID
+  , _ps_item2 :: Int -- |Third item ID
+  , _ps_item3 :: Int -- |Fourth item ID
+  , _ps_item4 :: Int -- |Fifth item ID
+  , _ps_item5 :: Int -- |Sixth item ID
+  , _ps_item6 :: Int -- |Seventh item ID
+  , _ps_killingSprees :: Int -- |Number of killing sprees
+  , _ps_kills :: Int -- |Number of kills
+  , _ps_largestCriticalStrike :: Int -- |Largest critical strike
+  , _ps_largestKillingSpree :: Int -- |Largest killing spree
+  , _ps_largestMultiKill :: Int -- |Largest multi kill
+  , _ps_magicDamageDealt :: Int -- |Magical damage dealt
+  , _ps_magicDamageDealtToChampions :: Int -- |Magical damage dealt to champions
+  , _ps_magicDamageTaken :: Int -- |Magic damage taken
+  , _ps_minionsKilled :: Int -- |Minions killed
+  , _ps_neutralMinionsKilled :: Int -- |Neutral minions killed
+  , _ps_neutralMinionsKilledEnemyJungle :: Int -- |Neutral jungle minions killed in the enemy team's jungle
+  , _ps_neutralMinionsKilledTeamJungle :: Int -- |Neutral jungle minions killed in your team's jungle
+  , _ps_nodeCapture :: Maybe Int -- |If game was a dominion game, number of node captures
+  , _ps_nodeCaptureAssist :: Maybe Int -- |If game was a dominion game, number of node capture assists
+  , _ps_nodeNeutralize :: Maybe Int -- |If game was a dominion game, number of node neutralizations
+  , _ps_nodeNeutralizeAssist :: Maybe Int -- |If game was a dominion game, number of node neutralization assists
+  , _ps_objectivePlayerScore :: Maybe Int -- |If game was a dominion game, player's objectives score, otherwise 0
+  , _ps_pentaKills :: Int -- |Number of penta kills
+  , _ps_physicalDamageDealt :: Int -- |Physical damage dealt
+  , _ps_physicalDamageDealtToChampions :: Int -- |Physical damage dealt to champions
+  , _ps_physicalDamageTaken :: Int -- |Physical damage taken
+  , _ps_quadraKills :: Int -- |Number of quadra kills
+  , _ps_sightWardsBoughtInGame :: Int -- |Sight wards purchased
+  , _ps_teamObjective :: Maybe Int -- |If game was a dominion game, number of completed team objectives (i.e., quests)
+  , _ps_totalDamageDealt :: Int -- |Total damage dealt
+  , _ps_totalDamageDealtToChampions :: Int -- |Total damage dealt to champions
+  , _ps_totalDamageTaken :: Int -- |Total damage taken
+  , _ps_totalHeal :: Int -- |Total heal amount
+  , _ps_totalPlayerScore :: Maybe Int -- |If game was a dominion game, player's total score, otherwise 0
+  , _ps_totalScoreRank :: Maybe Int -- |If game was a dominion game, team rank of the player's total score (e.g., 1-5)
+  , _ps_totalTimeCrowdControlDealt :: Int -- |Total dealt crowd control time
+  , _ps_totalUnitsHealed :: Int -- |Total units healed
+  , _ps_towerKills :: Int -- |Number of tower kills
+  , _ps_tripleKills :: Int -- |Number of triple kills
+  , _ps_trueDamageDealt :: Int -- |True damage dealt
+  , _ps_trueDamageDealtToChampions :: Int -- |True damage dealt to champions
+  , _ps_trueDamageTaken :: Int -- |True damage taken
+  , _ps_unrealKills :: Int -- |Number of unreal kills
+  , _ps_visionWardsBoughtInGame :: Int -- |Vision wards purchased
+  , _ps_wardsKilled :: Int -- |Number of wards killed
+  , _ps_wardsPlaced :: Int -- |Number of wards placed
   , _ps_winner :: Bool -- |Flag indicating whether or not the participant won
   } deriving (Typeable, Generic, Show)
 $(deriveJSON defaultOptions{fieldLabelModifier = drop 4} ''ParticipantStats)
@@ -230,7 +230,7 @@ makeClassy ''Participant
 data MatchDetail = MatchDetail
   { _md_mapId :: Int -- |Match map ID
   , _md_matchCreation :: Integer -- |Match creation time. Designates when the team select lobby is created and/or the match is made through match making, not when the game actually starts.
-  , _md_matchDuration :: Integer -- |Match duration
+  , _md_matchDuration :: Int -- |Match duration
   , _md_matchId :: MatchId -- |ID of the match
   , _md_matchMode :: Text -- |Match mode (legal values: CLASSIC, ODIN, ARAM, TUTORIAL, ONEFORALL, ASCENSION, FIRSTBLOOD)
   , _md_matchType :: Text -- |Match type (legal values: CUSTOM_GAME, MATCHED_GAME, TUTORIAL_GAME)

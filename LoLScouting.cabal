@@ -19,23 +19,30 @@ executable Scouting
   other-modules:       RiotApi.Wreq,
                        RiotApi.Types,
                        RiotApi.Haxl
-  build-depends:       base >=4.6,
-                       lens >=4.1,
-                       exceptions >=0.6,
-                       mtl >=2.1,
+  build-depends:       async,
                        aeson >= 0.7.0.6,
                        aeson-lens >= 0.5,
+                       base >=4.6,
                        bytestring >=0.10,
                        containers >=0.5,
-                       text >=0.11,
-                       wreq >=0.4,
+                       exceptions >=0.6,
+                       hashable >= 1.2,
+                       haxl >= 0.2,
                        hflags >=0.4,
                        http-client >=0.4,
+                       lens >=4.1,
+                       mtl >=2.1,
+                       network >= 2.4,
+                       persistent,
+                       persistent-mongoDB,
+                       persistent-sqlite,
+                       persistent-template,
                        rate-limit >=1.1,
+                       template-haskell,
+                       text >=0.11,
                        time-units >=1.0,
-                       haxl >= 0.2,
-                       hashable >= 1.2,
-                       async
+                       transformers >= 0.4,
+                       wreq >=0.4
   extensions:          DeriveDataTypeable,
                        DeriveGeneric,
                        GeneralizedNewtypeDeriving,
@@ -44,3 +51,13 @@ executable Scouting
                        StandaloneDeriving,
                        TemplateHaskell
 
+executable DatabaseTest
+  main-is:             Database/Test.hs
+  build-depends:       base >=4.6,
+                       network >= 2.4,
+                       persistent,
+                       persistent-mongoDB,
+                       persistent-sqlite,
+                       persistent-template,
+                       template-haskell,
+                       transformers >= 0.4

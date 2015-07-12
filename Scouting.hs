@@ -24,13 +24,13 @@ sortWith :: Ord b => (a -> b) -> [a] -> [a]
 sortWith f = L.sortBy (\a b -> f a `compare` f b)
 
 data ChampionStat = ChampionStat
-  { wins :: Integer
-  , losses :: Integer
-  , kills :: Integer
-  , deaths :: Integer
-  , assists :: Integer
-  , gold :: Integer
-  , duration :: Integer
+  { wins :: Int
+  , losses :: Int
+  , kills :: Int
+  , deaths :: Int
+  , assists :: Int
+  , gold :: Int
+  , duration :: Int
   } deriving (Show)
 instance Monoid ChampionStat where
   mempty = ChampionStat 0 0 0 0 0 0 0
